@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { Music } from "@/types/music"
+import { Play, Pause, SkipBack, SkipForward, Volume2 } from "lucide-react"
 
 type Props = {
   music: Music
@@ -25,51 +26,28 @@ export default function Player({
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
 
-  // atualizar tempo da música
-  useEffect(() => {
-
-    const audio = audioRef.current
-
-    if (!audio) return
-
-    const updateTime = () => {
-      setCurrentTime(audio.currentTime)
-      setDuration(audio.duration || 0)
-    }
-
-    audio.addEventListener("timeupdate", updateTime)
-
-    return () => {
-      audio.removeEventListener("timeupdate", updateTime)
-    }
-
-  }, [])
-
-  // ▶ tocar
   const handlePlay = () => {
     audioRef.current?.play()
     setPlaying(true)
   }
 
-  // ⏸ pausar
   const handlePause = () => {
     audioRef.current?.pause()
     setPlaying(false)
   }
 
-  // 🎚 volume
-  const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-    const vol = Number(e.target.value)
-
+  const updateTime = () => {
     if (audioRef.current) {
-      audioRef.current.volume = vol
+      setCurrentTime(audioRef.current.currentTime)
     }
-
-    setVolume(vol)
   }
 
-  // ⏱ avançar música
+  const handleLoaded = () => {
+    if (audioRef.current) {
+      setDuration(audioRef.current.duration)
+    }
+  }
+
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
 
     const time = Number(e.target.value)
@@ -81,7 +59,17 @@ export default function Player({
     setCurrentTime(time)
   }
 
-  // formatar tempo
+  const handleVolume = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const vol = Number(e.target.value)
+
+    if (audioRef.current) {
+      audioRef.current.volume = vol
+    }
+
+    setVolume(vol)
+  }
+
   const formatTime = (time: number) => {
 
     const minutes = Math.floor(time / 60)
@@ -90,15 +78,18 @@ export default function Player({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`
   }
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume
+    }
+  }, [])
+
   return (
-    <div className="w-full max-w-xl mx-auto mt-6 flex flex-col items-center gap-5 text-white">
+
+    <div className="w-full max-w-md text-white p-4 flex flex-col items-center gap-6">
 
       {/* BARRA DE PROGRESSO */}
-      <div className="flex items-center gap-3 w-full">
-
-        <span className="text-sm text-gray-400">
-          {formatTime(currentTime)}
-        </span>
+      <div className="w-full">
 
         <input
           type="range"
@@ -106,70 +97,59 @@ export default function Player({
           max={duration}
           value={currentTime}
           onChange={handleSeek}
-          className="
-          w-full
-          h-2
-          appearance-none
-          bg-zinc-700
-          rounded-full
-          cursor-pointer
-          [&::-webkit-slider-thumb]:appearance-none
-          [&::-webkit-slider-thumb]:h-4
-          [&::-webkit-slider-thumb]:w-4
-          [&::-webkit-slider-thumb]:rounded-full
-          [&::-webkit-slider-thumb]:bg-white
-          "
+          className="w-full accent-white"
         />
 
-        <span className="text-sm text-gray-400">
-          {formatTime(duration)}
-        </span>
+        <div className="flex justify-between text-xs text-gray-400 mt-1">
+          <span>{formatTime(currentTime)}</span>
+          <span>{formatTime(duration)}</span>
+        </div>
 
       </div>
 
       {/* CONTROLES */}
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-10">
 
         <button
           onClick={prevMusic}
-          className="text-3xl hover:scale-110 transition"
+          className="hover:scale-110 transition"
         >
-          ⏮
+          <SkipBack size={32} />
         </button>
 
         {!playing ? (
 
           <button
             onClick={handlePlay}
-            className="w-16 h-16 flex items-center justify-center rounded-full bg-white text-black text-2xl shadow-lg hover:scale-110 transition"
+            className="w-16 h-16 flex items-center justify-center bg-white rounded-full hover:scale-110 transition"
           >
-            ▶
+            <Play size={30} className="text-black ml-1" />
           </button>
 
         ) : (
 
           <button
             onClick={handlePause}
-            className="w-16 h-16 flex items-center justify-center rounded-full bg-white text-black text-2xl shadow-lg hover:scale-110 transition"
+            className="w-16 h-16 flex items-center justify-center bg-white rounded-full hover:scale-110 transition"
           >
-            ❚❚
+            <Pause size={30} className="text-black" />
           </button>
 
         )}
 
         <button
           onClick={nextMusic}
-          className="text-3xl hover:scale-110 transition"
+          className="hover:scale-110 transition"
         >
-          ⏭
+          <SkipForward size={32} />
         </button>
 
       </div>
 
-      {/* VOLUME - apenas desktop */}
-      <div className="hidden md:flex items-center gap-3">
+      {/* VOLUME (apenas desktop) */}
+      <div className="hidden md:flex items-center gap-4 w-full max-w-xs">
 
-        🔊
+        <Volume2 size={20} />
 
         <input
           type="range"
@@ -178,15 +158,16 @@ export default function Player({
           step="0.01"
           value={volume}
           onChange={handleVolume}
-          className="w-[120px]"
+          className="w-full"
         />
 
       </div>
 
-      {/* AUDIO */}
       <audio
         ref={audioRef}
         src={music.file}
+        onTimeUpdate={updateTime}
+        onLoadedMetadata={handleLoaded}
         onEnded={nextMusic}
       />
 
