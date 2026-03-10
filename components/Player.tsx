@@ -91,10 +91,10 @@ export default function Player({
   }
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-black text-white p-6 flex flex-col items-center gap-4">
+    <div className="w-full max-w-xl mx-auto mt-6 flex flex-col items-center gap-5 text-white">
 
       {/* BARRA DE PROGRESSO */}
-      <div className="flex items-center gap-3 w-full max-w-xl">
+      <div className="flex items-center gap-3 w-full">
 
         <span className="text-sm text-gray-400">
           {formatTime(currentTime)}
@@ -132,7 +132,7 @@ export default function Player({
 
         <button
           onClick={prevMusic}
-          className="text-3xl"
+          className="text-3xl hover:scale-110 transition"
         >
           ⏮
         </button>
@@ -159,15 +159,15 @@ export default function Player({
 
         <button
           onClick={nextMusic}
-          className="text-3xl"
+          className="text-3xl hover:scale-110 transition"
         >
           ⏭
         </button>
 
       </div>
 
-      {/* VOLUME */}
-      <div className="flex items-center gap-3">
+      {/* VOLUME - apenas desktop */}
+      <div className="hidden md:flex items-center gap-3">
 
         🔊
 
