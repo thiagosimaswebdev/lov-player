@@ -1,36 +1,168 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎧 Mini Spotify Player – Our Song
 
-## Getting Started
+Um **player de música personalizado inspirado no Spotify**, desenvolvido como um presente especial.
+O projeto permite tocar músicas, navegar entre faixas e acessar o player através de um **QR Code escaneável**, permitindo que o player seja aberto diretamente pelo celular.
 
-First, run the development server:
+💚 Desenvolvido com carinho como um presente.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+## 🚀 Tecnologias utilizadas
+
+Este projeto foi desenvolvido utilizando tecnologias modernas de desenvolvimento web:
+
+* ⚛ React
+* ⚡ Next.js
+* 🎨 Tailwind CSS
+* 🔊 HTML5 Audio API
+* 🔳 Biblioteca de QR Code
+
+---
+
+## 🎵 Funcionalidades
+
+✔ Player de música funcional
+✔ Botão **Play / Pause**
+✔ **Próxima música** e **Música anterior**
+✔ Controle de **volume**
+✔ **Capa da música animada** enquanto toca
+✔ Interface inspirada no **Spotify**
+✔ Página exclusiva para **geração de QR Code**
+✔ QR Code que permite abrir o player diretamente no celular
+
+---
+
+## 📱 QR Code
+
+O projeto possui uma página dedicada para gerar um **QR Code estilizado** que permite abrir o player diretamente pelo celular.
+
+Depois que o projeto estiver online, basta escanear o QR Code para acessar o player.
+
+Exemplo de uso:
+
+```
+Scan to listen 🎧
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Esse QR Code pode ser utilizado para:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* Quadros personalizados
+* Cartões de presente
+* Impressões decorativas
+* Acrílicos personalizados
+* Presentes criativos
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📂 Estrutura do Projeto
 
-To learn more about Next.js, take a look at the following resources:
+```
+app
+├─ page.tsx
+├─ layout.tsx
+├─ qr
+│  └─ page.tsx
+├─ globals.css
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+components
+├─ Player.tsx
+├─ MusicCards.tsx
+├─ StyledQRCode.tsx
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+data
+└─ musics.ts
 
-## Deploy on Vercel
+types
+└─ music.ts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+public
+├─ covers
+├─ musics
+├─ preview.png
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## ⚙️ Como rodar o projeto
+
+Clone o repositório:
+
+```
+git clone https://github.com/seu-usuario/mini-spotify-player
+```
+
+Entre na pasta do projeto:
+
+```
+cd mini-spotify-player
+```
+
+Instale as dependências:
+
+```
+npm install
+```
+
+Execute o projeto:
+
+```
+npm run dev
+```
+
+Abra no navegador:
+
+```
+http://localhost:3000
+```
+
+---
+
+## 📷 Página de QR Code
+
+Para gerar o QR Code do player:
+
+```
+http://localhost:3000/qr
+```
+
+Depois basta:
+
+1. Abrir a página
+2. Clicar com botão direito no QR Code
+3. Salvar a imagem
+4. Imprimir ou utilizar em um quadro personalizado
+
+---
+
+## 🎯 Objetivo do projeto
+
+Este projeto foi desenvolvido com o objetivo de:
+
+* Praticar **React e Next.js**
+* Trabalhar com **componentização**
+* Manipular **áudio no navegador**
+* Integrar **QR Code com aplicações web**
+* Criar um projeto criativo e significativo
+
+Além disso, ele também foi criado como um **presente personalizado**, conectando tecnologia com algo especial.
+
+---
+
+## 💚 Mensagem
+
+Este projeto foi desenvolvido com muito carinho.
+
+Às vezes uma música pode guardar momentos especiais —
+e este pequeno player foi criado exatamente para isso.
+
+---
+
+## 👨‍💻 Autor
+
+**Thiago Simas**
+
+🎓 Estudante de **Análise e Desenvolvimento de Sistemas**
+💻 Desenvolvedor em formação apaixonado por tecnologia e desenvolvimento web.
+
+---
+
+⭐ Se você gostou do projeto, deixe uma estrela no repositório!
