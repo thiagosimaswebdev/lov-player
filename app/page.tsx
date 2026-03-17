@@ -1,16 +1,28 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Player from "@/components/Player"
 import { musics } from "@/data/musics"
 import { Music } from "@/types/music"
 
 export default function Home() {
 
+  const [loading, setLoading] = useState(true)
+
   const [currentIndex, setCurrentIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
 
   const currentMusic: Music = musics[currentIndex]
+
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+
+    return () => clearTimeout(timer)
+
+  }, [])
 
   const nextMusic = () => {
     if (currentIndex < musics.length - 1) {
@@ -26,6 +38,34 @@ export default function Home() {
     } else {
       setCurrentIndex(musics.length - 1)
     }
+  }
+
+  // LOADER DA PÁGINA
+  if (loading) {
+    return (
+
+      <main className="h-dvh bg-zinc-950 flex items-center justify-center">
+
+        <div className="flex flex-col items-center gap-6 text-white">
+
+          <div className="flex gap-2 items-end">
+
+            <div className="w-2 h-10 bg-white animate-bounce"></div>
+            <div className="w-2 h-6 bg-white animate-bounce delay-100"></div>
+            <div className="w-2 h-12 bg-white animate-bounce delay-200"></div>
+            <div className="w-2 h-8 bg-white animate-bounce delay-300"></div>
+
+          </div>
+
+          <p className="text-gray-400 text-sm">
+            Carregando player...
+          </p>
+
+        </div>
+
+      </main>
+
+    )
   }
 
   return (
